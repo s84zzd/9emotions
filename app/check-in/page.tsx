@@ -8,7 +8,7 @@ import { RecommendationEngine, RecommendationResult } from "@/lib/recommendation
 import { CheckInService } from "@/lib/services/checkIn";
 import { ActivityService } from "@/lib/services/activity";
 import { ACTIVITIES as FALLBACK_ACTIVITIES } from "@/lib/data/activities";
-import type { EmotionNameEn } from "@/types/emotion";
+import type { EmotionNameEn, RegulationDirection } from "@/types/emotion";
 import type { Scene } from "@/types/report";
 import type { Activity } from "@/types/activity";
 import { 
@@ -327,14 +327,23 @@ export default function CheckInPage() {
                                         <Sparkles className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">当前状态</div>
+                                        <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">当前能量趋势</div>
                                         <h3 className="font-bold text-slate-800 text-lg">
-                                            {result?.final_direction ? getDirectionLabel(result.final_direction) : "为你推荐"}
+                                            {result?.final_direction ? getTrendLabel(result.final_direction) : "为你推荐"}
                                         </h3>
                                     </div>
                                 </div>
+                                
+                                {result?.final_direction && (
+                                  <div className="mb-4 flex flex-wrap gap-2">
+                                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary">
+                                        建议方向：{getDirectionLabel(result.final_direction)}
+                                    </span>
+                                  </div>
+                                )}
+
                                 <p className="text-slate-600 text-sm leading-relaxed">
-                                    我们检测到你的情绪能量正在波动。以下建议旨在帮助你{result?.final_direction === 'activate' ? '提升' : '平复'}能量。
+                                    {result?.final_direction ? getTrendDescription(result.final_direction) : "请选择情绪和场景以获取建议。"}
                                 </p>
                             </div>
 
@@ -395,10 +404,31 @@ export default function CheckInPage() {
 
 function getDirectionLabel(direction: string): string {
   const map: Record<string, string> = {
-    "maintain": "保持当下 (Maintain)",
-    "activate": "激活能量 (Activate)",
-    "stabilize": "稳固身心 (Stabilize)",
-    "cool_down": "降温冷静 (Cool Down)"
+    "maintain": "保持当下",
+    "activate": "激活能量",
+    "stabilize": "稳固身心",
+    "cool_down": "降温冷静"
   };
   return map[direction] || "为你推荐";
+}
+
+function getTrendLabel(direction: RegulationDirection): string {
+  // Level 2 Reverse Logic: Direction -> Trend
+  const map: Record<string, string> = {
+    "cool_down": "能量过高 (High)",
+    "activate": "能量过低 (Low)",
+    "stabilize": "能量混乱 (Chaotic)",
+    "maintain": "能量平稳 (Stable)"
+  };
+  return map[direction] || "能量波动";
+}
+
+function getTrendDescription(direction: RegulationDirection): string {
+  const map: Record<string, string> = {
+    "cool_down": "检测到你当前能量水平较高，可能伴随压力或烦躁。建议进行降温类活动，平复心绪。",
+    "activate": "检测到你当前能量不足，可能感到疲惫或低落。建议进行激活类活动，提升活力。",
+    "stabilize": "检测到你内心能量纷乱，可能感到焦虑或不安。建议进行稳固类活动，重建秩序。",
+    "maintain": "你的能量状态平稳良好。建议继续保持当下的节奏，享受生活。"
+  };
+  return map[direction] || "我们检测到你的情绪能量正在波动。以下建议旨在帮助你调节状态。";
 }
