@@ -3,36 +3,191 @@
 @tailwind utilities;
 
 :root {
-  /* Brand Colors */
-  --primary: #7C6FF6; /* 柔紫 */
-  --secondary: #AFA7FF; /* 雾紫 */
-  --background: #F8F7FC; /* 奶白紫 */
-  --text-main: #3A3550; /* 深紫灰 */
+  /* Enhanced Feminine Brand Colors */
+  --primary: #B794F6; /* 薰衣草紫 - 更柔和 */
+  --primary-light: #D4BCFF; /* 淡紫 */
+  --secondary: #FFC4E8; /* 珊瑚粉 */
+  --accent: #FFE5F1; /* 樱花粉 */
+  --background: #FFF8FC; /* 奶白粉紫 - 更温暖 */
+  --background-soft: #FFF5FA; /* 柔和背景 */
+  --text-main: #4A3C5E; /* 柔和深紫 */
+  --text-soft: #8B7BA8; /* 柔和灰紫 */
   
   /* Component Colors */
-  --tag-bg: #EFEAFF;
-  --chart-line-main: #7C6FF6;
-  --chart-line-aux: #C7C2FF;
+  --tag-bg: #F5EDFF; /* 淡紫标签背景 */
+  --tag-pink: #FFE5F1; /* 粉色标签背景 */
+  --chart-line-main: #B794F6;
+  --chart-line-aux: #E5D4FF;
+  --card-gradient: linear-gradient(135deg, #FFEEF8 0%, #F5EDFF 100%);
   
-  /* Shadows */
-  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.04);
+  /* Soft Shadows */
+  --shadow-soft: 0 8px 24px rgba(183, 148, 246, 0.12);
+  --shadow-hover: 0 12px 32px rgba(183, 148, 246, 0.18);
+  --shadow-pink: 0 8px 24px rgba(255, 196, 232, 0.15);
+  
+  /* Border Radius */
+  --radius-xl: 24px;
+  --radius-lg: 20px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
 }
 
 body {
-  background-color: var(--background);
+  background: linear-gradient(180deg, #FFF8FC 0%, #FFF5FA 100%);
   color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 优美的滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary-light), var(--secondary));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }
 
 @layer components {
+  /* Enhanced Card with gradient */
   .card {
-    @apply bg-white rounded-[16px] shadow-[0_4px_12px_rgba(0,0,0,0.04)];
+    @apply bg-white rounded-[24px] shadow-[0_8px_24px_rgba(183,148,246,0.12)] 
+           backdrop-blur-sm border border-purple-50/50
+           transition-all duration-300 hover:shadow-[0_12px_32px_rgba(183,148,246,0.18)];
+    background: linear-gradient(135deg, #FFFFFF 0%, #FEFAFF 100%);
   }
   
+  /* Gradient Card */
+  .card-gradient {
+    @apply rounded-[24px] shadow-[0_8px_24px_rgba(255,196,232,0.15)]
+           transition-all duration-300;
+    background: linear-gradient(135deg, #FFEEF8 0%, #F5EDFF 100%);
+  }
+  
+  /* Enhanced Tag */
   .tag {
-    @apply bg-[var(--tag-bg)] text-[var(--primary)] rounded-[12px] px-3 py-1 text-sm font-medium;
+    @apply rounded-[16px] px-4 py-2 text-sm font-medium
+           transition-all duration-200
+           hover:scale-105;
+    background: linear-gradient(135deg, #F5EDFF 0%, #FFE5F1 50%, #F5EDFF 100%);
+    color: var(--primary);
+    box-shadow: 0 4px 12px rgba(183, 148, 246, 0.1);
   }
   
+  /* Pink Tag */
+  .tag-pink {
+    @apply rounded-[16px] px-4 py-2 text-sm font-medium
+           transition-all duration-200 hover:scale-105;
+    background: linear-gradient(135deg, #FFE5F1 0%, #FFC4E8 100%);
+    color: #E91E8C;
+    box-shadow: 0 4px 12px rgba(255, 196, 232, 0.15);
+  }
+  
+  /* Chart Container */
   .chart-container {
-    @apply bg-white rounded-[20px] p-4 shadow-[0_4px_12px_rgba(0,0,0,0.04)];
+    @apply bg-white/80 backdrop-blur-md rounded-[24px] p-6 
+           shadow-[0_8px_24px_rgba(183,148,246,0.12)]
+           border border-purple-50/50;
+  }
+  
+  /* Breathing Animation */
+  .breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+  
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  
+  /* Floating Animation */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  /* Shimmer Effect */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      transparent, 
+      rgba(255, 255, 255, 0.3), 
+      transparent
+    );
+    animation: shimmer 3s infinite;
+  }
+  
+  @keyframes shimmer {
+    to {
+      left: 100%;
+    }
+  }
+  
+  /* Glow Effect */
+  .glow {
+    box-shadow: 
+      0 0 20px rgba(183, 148, 246, 0.3),
+      0 0 40px rgba(255, 196, 232, 0.2);
+  }
+  
+  /* Button Styles */
+  .btn-primary {
+    @apply px-6 py-3 rounded-[20px] font-medium
+           transition-all duration-300
+           hover:scale-105 active:scale-95;
+    background: linear-gradient(135deg, #B794F6 0%, #D4BCFF 100%);
+    color: white;
+    box-shadow: 0 8px 24px rgba(183, 148, 246, 0.25);
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 rounded-[20px] font-medium
+           transition-all duration-300
+           hover:scale-105 active:scale-95;
+    background: linear-gradient(135deg, #FFE5F1 0%, #FFC4E8 100%);
+    color: #E91E8C;
+    box-shadow: 0 8px 24px rgba(255, 196, 232, 0.25);
+  }
+}
+
+/* Utility Classes */
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #B794F6 0%, #FFC4E8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .bg-mesh {
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(183, 148, 246, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(255, 196, 232, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(183, 148, 246, 0.08) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(255, 196, 232, 0.08) 0px, transparent 50%);
   }
 }
