@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, BarChart3, Calendar, Sparkles, Zap, Wind } from "lucide-react";
+import { ArrowRight, BarChart3, Calendar, Sparkles, Zap, Wind, Heart, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -16,85 +16,194 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F8F9FE] relative overflow-hidden pb-24">
-      {/* Decorative Background Elements */}
-      <div className="absolute top-[-10%] right-[-10%] w-[300px] h-[300px] bg-purple-200/40 rounded-full blur-[80px]" />
-      <div className="absolute top-[20%] left-[-10%] w-[200px] h-[200px] bg-blue-200/40 rounded-full blur-[60px]" />
-      <div className="absolute bottom-[10%] right-[10%] w-[250px] h-[250px] bg-pink-200/30 rounded-full blur-[70px]" />
+    <div className="min-h-screen bg-mesh relative overflow-hidden pb-24">
+      {/* Enhanced Decorative Background Elements with Gradient */}
+      <div className="absolute top-[-10%] right-[-10%] w-[400px] h-[400px] bg-gradient-to-br from-purple-300/30 to-pink-300/30 rounded-full blur-[100px] animate-pulse" />
+      <div className="absolute top-[20%] left-[-10%] w-[300px] h-[300px] bg-gradient-to-br from-pink-300/25 to-purple-200/25 rounded-full blur-[80px] float" />
+      <div className="absolute bottom-[15%] right-[5%] w-[350px] h-[350px] bg-gradient-to-br from-purple-200/20 to-pink-200/30 rounded-full blur-[90px] breathe" />
+      
+      {/* Floating Hearts */}
+      <motion.div
+        animate={{ 
+          y: [0, -20, 0],
+          x: [0, 10, 0],
+          rotate: [0, 5, 0]
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[30%] right-[15%] opacity-10"
+      >
+        <Heart className="w-12 h-12 text-pink-400" fill="currentColor" />
+      </motion.div>
+      
+      <motion.div
+        animate={{ 
+          y: [0, -15, 0],
+          x: [0, -8, 0],
+          rotate: [0, -5, 0]
+        }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        className="absolute bottom-[40%] left-[10%] opacity-10"
+      >
+        <Star className="w-10 h-10 text-purple-400" fill="currentColor" />
+      </motion.div>
 
-      <main className="relative z-10 px-6 pt-12 max-w-md mx-auto flex flex-col h-full">
-        {/* Header */}
+      <main className="relative z-10 px-6 pt-16 max-w-md mx-auto flex flex-col h-full">
+        {/* Enhanced Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-12"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mb-16"
         >
-          <p className="text-slate-400 text-sm font-medium tracking-wider uppercase mb-1">9Emotions</p>
-          <h1 className="text-3xl font-bold text-slate-800 tracking-tight">
-            {greeting}，<br />
-            <span className="text-slate-500 font-normal">愿你此刻内心安宁。</span>
+          <motion.p 
+            className="text-gradient text-sm font-semibold tracking-widest uppercase mb-2 shimmer"
+            animate={{ opacity: [0.7, 1, 0.7] }}
+            transition={{ duration: 3, repeat: Infinity }}
+          >
+            ✨ 9Emotions
+          </motion.p>
+          <h1 className="text-4xl font-bold tracking-tight">
+            <span className="text-gradient">{greeting}</span>
+            <span className="text-2xl">，</span>
+            <br />
+            <span className="text-[var(--text-soft)] font-light text-xl">
+              愿你此刻内心安宁 🌸
+            </span>
           </h1>
         </motion.div>
 
-        {/* Main Action - Breathing Orb */}
-        <div className="flex-1 flex flex-col items-center justify-center min-h-[300px]">
+        {/* Main Action - Enhanced Breathing Orb */}
+        <div className="flex-1 flex flex-col items-center justify-center min-h-[320px] mb-8">
           <Link href="/check-in" className="relative group">
-            {/* Pulsing Ring */}
+            {/* Outer Glow Ring */}
             <motion.div 
-              animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.1, 0.3] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute inset-0 bg-gradient-to-tr from-indigo-400 to-purple-400 rounded-full blur-xl"
+              animate={{ 
+                scale: [1, 1.15, 1],
+                opacity: [0.4, 0.1, 0.4]
+              }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-[-20px] rounded-full"
+              style={{
+                background: 'radial-gradient(circle, rgba(183,148,246,0.3) 0%, rgba(255,196,232,0.2) 50%, transparent 70%)',
+                filter: 'blur(30px)'
+              }}
             />
             
-            {/* Main Button */}
+            {/* Middle Pulsing Ring */}
+            <motion.div 
+              animate={{ 
+                scale: [1, 1.08, 1],
+                opacity: [0.5, 0.2, 0.5]
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              className="absolute inset-[-10px] bg-gradient-to-br from-purple-300/40 to-pink-300/40 rounded-full blur-2xl"
+            />
+            
+            {/* Main Button with Gradient */}
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative w-48 h-48 rounded-full bg-gradient-to-br from-white to-slate-50 shadow-2xl shadow-indigo-100 flex flex-col items-center justify-center border border-white/50"
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92 }}
+              className="relative w-56 h-56 rounded-full flex flex-col items-center justify-center border-2 border-white/80 backdrop-blur-lg overflow-hidden glow"
+              style={{
+                background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF5FA 50%, #F5EDFF 100%)',
+                boxShadow: '0 20px 60px rgba(183, 148, 246, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.5) inset'
+              }}
             >
-              <div className="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-500 flex items-center justify-center mb-3 shadow-inner">
-                <Sparkles className="w-8 h-8" />
-              </div>
-              <span className="text-slate-700 font-bold text-lg">开启觉察</span>
-              <span className="text-slate-400 text-xs mt-1">记录当下情绪</span>
+              {/* Shimmer Effect */}
+              <div className="absolute inset-0 shimmer opacity-30" />
+              
+              {/* Icon Container */}
+              <motion.div 
+                className="w-20 h-20 rounded-3xl flex items-center justify-center mb-4 relative overflow-hidden"
+                style={{
+                  background: 'linear-gradient(135deg, #F5EDFF 0%, #FFE5F1 100%)'
+                }}
+                animate={{ rotate: [0, 5, -5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <Sparkles className="w-10 h-10 text-gradient relative z-10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-200/50 to-pink-200/50 blur-xl" />
+              </motion.div>
+              
+              <span className="text-gradient font-bold text-2xl mb-1">开启觉察</span>
+              <span className="text-[var(--text-soft)] text-sm">记录当下的情绪</span>
+              
+              {/* Bottom Sparkle */}
+              <motion.div
+                className="absolute bottom-8"
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                  opacity: [0.5, 1, 0.5]
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-400" />
+              </motion.div>
             </motion.div>
           </Link>
         </div>
 
-        {/* Insights Grid */}
+        {/* Enhanced Insights Grid */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-2 gap-4 mt-8"
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          className="grid grid-cols-2 gap-4 mb-4"
         >
+          {/* Weekly Report Card */}
           <Link 
             href="/reports/weekly"
-            className="group relative overflow-hidden bg-white/80 backdrop-blur-xl p-5 rounded-3xl border border-white/60 shadow-lg shadow-slate-200/50 transition-all hover:shadow-xl hover:shadow-slate-200/80 hover:-translate-y-1"
+            className="group relative overflow-hidden card-gradient p-6 rounded-[24px] transition-all duration-300 hover:scale-105 hover:shadow-[0_12px_32px_rgba(255,196,232,0.25)]"
           >
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <Zap className="w-12 h-12 text-orange-500 rotate-12" />
+            {/* Background Icon */}
+            <div className="absolute -top-2 -right-2 opacity-[0.08] group-hover:opacity-[0.12] transition-opacity duration-300">
+              <Zap className="w-24 h-24 text-orange-500 rotate-12" />
             </div>
-            <div className="w-10 h-10 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center mb-3">
-              <BarChart3 className="w-5 h-5" />
+            
+            {/* Icon Container */}
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-100 to-pink-100 text-orange-600 flex items-center justify-center mb-4 relative z-10 group-hover:scale-110 transition-transform">
+              <BarChart3 className="w-6 h-6" />
             </div>
-            <h3 className="font-bold text-slate-800">周报</h3>
-            <p className="text-xs text-slate-400 mt-1">近7天能量趋势</p>
+            
+            <h3 className="font-bold text-[var(--text-main)] text-lg mb-1 relative z-10">周报</h3>
+            <p className="text-xs text-[var(--text-soft)] relative z-10">近7天能量趋势 ✨</p>
+            
+            {/* Hover Arrow */}
+            <motion.div
+              className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity"
+              initial={{ x: -10 }}
+              whileHover={{ x: 0 }}
+            >
+              <ArrowRight className="w-5 h-5 text-orange-500" />
+            </motion.div>
           </Link>
 
+          {/* Monthly Report Card */}
           <Link 
             href="/reports/monthly"
-            className="group relative overflow-hidden bg-white/80 backdrop-blur-xl p-5 rounded-3xl border border-white/60 shadow-lg shadow-slate-200/50 transition-all hover:shadow-xl hover:shadow-slate-200/80 hover:-translate-y-1"
+            className="group relative overflow-hidden card-gradient p-6 rounded-[24px] transition-all duration-300 hover:scale-105 hover:shadow-[0_12px_32px_rgba(183,148,246,0.25)]"
           >
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <Wind className="w-12 h-12 text-purple-500 rotate-12" />
+            {/* Background Icon */}
+            <div className="absolute -top-2 -right-2 opacity-[0.08] group-hover:opacity-[0.12] transition-opacity duration-300">
+              <Wind className="w-24 h-24 text-purple-500 rotate-12" />
             </div>
-            <div className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-500 flex items-center justify-center mb-3">
-              <Calendar className="w-5 h-5" />
+            
+            {/* Icon Container */}
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-100 to-pink-100 text-purple-600 flex items-center justify-center mb-4 relative z-10 group-hover:scale-110 transition-transform">
+              <Calendar className="w-6 h-6" />
             </div>
-            <h3 className="font-bold text-slate-800">月报</h3>
-            <p className="text-xs text-slate-400 mt-1">本月情绪洞察</p>
+            
+            <h3 className="font-bold text-[var(--text-main)] text-lg mb-1 relative z-10">月报</h3>
+            <p className="text-xs text-[var(--text-soft)] relative z-10">本月情绪洞察 🌙</p>
+            
+            {/* Hover Arrow */}
+            <motion.div
+              className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity"
+              initial={{ x: -10 }}
+              whileHover={{ x: 0 }}
+            >
+              <ArrowRight className="w-5 h-5 text-purple-500" />
+            </motion.div>
           </Link>
         </motion.div>
       </main>
