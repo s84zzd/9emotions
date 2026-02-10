@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MonthlyReport, Scene } from "@/types/report";
-import { ArrowLeft, Calendar, Sparkles, TrendingUp, TrendingDown, Activity, PieChart } from "lucide-react";
+import { ArrowLeft, Calendar, Sparkles, TrendingUp, TrendingDown, Activity, PieChart, Minus } from "lucide-react";
 import Link from "next/link";
 import { ReportEngine } from "@/lib/report-engine/core";
 import { CheckInService } from "@/lib/services/checkIn";
