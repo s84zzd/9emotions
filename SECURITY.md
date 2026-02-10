@@ -55,18 +55,21 @@
 
 #### xlsx 依赖漏洞
 - **问题**: `xlsx@0.18.5` 存在原型污染和 ReDoS 漏洞
-- **影响**: 仅用于开发脚本（`scripts/import_activities_db.js`）
-- **建议解决方案**:
+- **影响**: 仅用于开发脚本（`scripts/import_activities_db.js`），不包含在生产构建中
+- **已采取措施**: 
+  - 已移动到 `devDependencies`，确保不会打包到生产环境
+  - 在脚本中添加了安全警告注释
+  - 该脚本仅用于一次性数据导入，不在生产环境运行
+- **长期建议解决方案**:
   ```bash
-  # 选项 1: 移除 xlsx，使用 CSV 格式
+  # 选项 1: 移除 xlsx，转换为 CSV 格式
   npm uninstall xlsx
   # 使用 Node.js 内置的 CSV 解析或 csv-parse 库
   
-  # 选项 2: 升级到更安全的版本（如果有）
-  npm update xlsx
+  # 选项 2: 使用更安全的替代库（如 exceljs）
+  npm install --save-dev exceljs
   
-  # 选项 3: 使用替代库（如 exceljs）
-  npm install exceljs
+  # 选项 3: 将 Excel 文件预先转换为 CSV/JSON
   ```
 
 #### 用户认证系统
