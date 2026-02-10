@@ -48,6 +48,17 @@ npm install
 yarn install
 ```
 
+### 环境配置
+
+1. 复制 `.env.example` 文件并重命名为 `.env.local`
+2. 填入你的 Supabase 项目配置：
+
+```bash
+cp .env.example .env.local
+```
+
+编辑 `.env.local` 并填入实际的 Supabase 配置。
+
 ### 启动开发服务器
 
 ```bash
@@ -92,9 +103,20 @@ npm run dev -- -H 0.0.0.0
 - [x] 推荐引擎逻辑开发
 - [x] 周报/月报功能实现
 - [x] 移动端适配与高保真重构
+- [x] **安全审计与改进** (已完成基础安全措施)
 - [ ] **接入 Supabase 数据库** (进行中)
 - [ ] 用户认证体系 (Login/Auth)
 - [ ] 更多个性化设置
+
+## 🔒 安全
+
+本项目已实施基本安全措施，包括：
+- 更新依赖以修复已知漏洞
+- 配置 HTTP 安全头
+- 输入验证和清理
+- 数据库行级安全 (RLS)
+
+详细信息请参阅 [SECURITY.md](./SECURITY.md)。
 
 ## 📄 许可证
 
