@@ -160,7 +160,7 @@ export class ReportEngine {
         r.emotions.forEach(e => {
           const info = EMOTION_MAP[e];
           if (info) {
-            energySum += info.energy;
+            energySum += (info.energy[0] + info.energy[1]) / 2;
             count++;
             emotionCounts[info.zh] = (emotionCounts[info.zh] || 0) + 1;
             if (emotionCounts[info.zh] > maxEmotionCount) {
@@ -202,8 +202,8 @@ export class ReportEngine {
         const info = EMOTION_MAP[e];
         if (info) {
             emotionCounts[info.zh] = (emotionCounts[info.zh] || 0) + 1;
-            if (info.energy > 0) positiveCount++;
-            if (info.energy < 0) negativeCount++;
+            if (info.value > 0) positiveCount++;
+            if (info.value < 0) negativeCount++;
             total++;
         }
       });
