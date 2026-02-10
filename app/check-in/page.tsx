@@ -246,8 +246,18 @@ export default function CheckInPage() {
                   <motion.button
                     key={scene.id}
                     initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 + idx * 0.05 }}
+                    animate={{ 
+                      opacity: 1, 
+                      y: 0,
+                      scale: selectedScene === scene.id ? 1.05 : 1
+                    }}
+                    transition={{ 
+                      delay: 0.3 + idx * 0.05,
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 20
+                    }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => setSelectedScene(scene.id)}
                     className={cn(
                       "py-4 px-2 rounded-2xl text-sm font-semibold transition-all duration-200 border flex flex-col items-center gap-2",
