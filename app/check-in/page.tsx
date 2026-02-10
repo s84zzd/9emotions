@@ -276,7 +276,11 @@ export default function CheckInPage() {
                   className="w-full h-14 rounded-full bg-white shadow-lg flex items-center justify-center gap-3 text-primary font-bold border border-primary/10"
                 >
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>生成个性化建议中...</span>
+                  <span className="text-sm">
+                    {allActivities.length > 50 
+                      ? `正在从 ${allActivities.length} 个活动中筛选...` 
+                      : "生成个性化建议中..."}
+                  </span>
                 </motion.div>
               ) : step === "result" ? (
                 <motion.div
@@ -288,7 +292,9 @@ export default function CheckInPage() {
                         <header className="flex justify-between items-center mb-8 pt-4">
                             <div>
                                 <h2 className="text-2xl font-bold text-slate-800">推荐方案</h2>
-                                <p className="text-slate-400 text-sm">基于你当下的情绪能量</p>
+                                <p className="text-slate-400 text-sm flex items-center gap-1">
+                                  基于云端 {allActivities.length} 个活动库智能匹配
+                                </p>
                             </div>
                             <button 
                                 onClick={() => {

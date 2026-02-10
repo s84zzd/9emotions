@@ -125,21 +125,29 @@ export class RecommendationEngine {
     });
 
     // 2. 排序 (Rank)
-    // 排序规则：强度(low > medium > high) -> 匹配度(简化为默认) -> 新鲜度(随机扰动)
-    return candidates.sort((a, b) => {
-      // 优先级 1: 强度 (Intensity) - 越轻越好
-      const intensityScore = { low: 1, medium: 2, high: 3 };
-      if (intensityScore[a.intensity] !== intensityScore[b.intensity]) {
-        return intensityScore[a.intensity] - intensityScore[b.intensity];
+    // 策略：按强度分组 -> 组内随机洗牌 -> 按强度优先级合并 -> 取前3
+    
+    // Helper to shuffle array
+    const shuffle = <T>(array: T[]): T[] => {
+      const newArr = [...array];
+      for (let i = newArr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
       }
+      return newArr;
+    };
 
-      // 优先级 2: 时长 (Duration) - 越短越好 (作为轻量的代理指标)
-      if (a.duration_min !== b.duration_min) {
-          return a.duration_min - b.duration_min;
-      }
+    const low = candidates.filter(c => c.intensity === 'low');
+    const medium = candidates.filter(c => c.intensity === 'medium');
+    const high = candidates.filter(c => c.intensity === 'high');
 
-      // 优先级 3: 新鲜度 (随机扰动 - 简单模拟)
-      return Math.random() - 0.5;
-    }).slice(0, 3); // 返回前3个
+    // 组内随机
+    const shuffledLow = shuffle(low);
+    const shuffledMedium = shuffle(medium);
+    const shuffledHigh = shuffle(high);
+
+    // 合并：优先推荐低强度，如果不够再补中强度，最后高强度
+    // TODO: 未来可以根据用户当前能量值动态调整优先级（例如能量极低时只推low）
+    return [...shuffledLow, ...shuffledMedium, ...shuffledHigh].slice(0, 3);
   }
 }
