@@ -4,8 +4,6 @@ import { Activity } from "@/types/activity";
 import { EMOTION_MAP } from "@/lib/constants";
 import { TREND_TO_DIRECTION, EMOTION_DIRECTION_PRESETS } from "./rules";
 
-import { ACTIVITIES } from "@/lib/data/activities";
-
 export interface RecommendationResult {
   activities: Activity[];
   final_direction: RegulationDirection;
@@ -19,6 +17,7 @@ export interface RecommendationResult {
 export interface RecommendationContext {
   emotions: EmotionNameEn[];
   scene: Scene;
+  availableActivities: Activity[]; // Add this
 }
 
 export class RecommendationEngine {
@@ -26,14 +25,14 @@ export class RecommendationEngine {
    * 核心推荐算法 - 完整实现流程图逻辑
    */
   static recommend(context: RecommendationContext): RecommendationResult {
-    const { emotions, scene } = context;
+    const { emotions, scene, availableActivities } = context;
 
     // Step 3: 情绪微调方向 (加权计算)
     // 同时也获取 scores 用于 debug
     const { direction: targetDirection, scores } = this.calculateWeightedDirection(emotions);
 
     // Step 4 & 5: 场景过滤 & 活动排序
-    const activities = this.filterAndRankActivities(targetDirection, scene, emotions);
+    const activities = this.filterAndRankActivities(availableActivities, targetDirection, scene, emotions);
 
     // Step 6: 输出推荐
     return {
@@ -111,12 +110,13 @@ export class RecommendationEngine {
    * Step 4 & 5: 过滤与排序
    */
   private static filterAndRankActivities(
+    activities: Activity[],
     direction: RegulationDirection,
     scene: Scene,
     emotions: EmotionNameEn[]
   ): Activity[] {
     // 1. 过滤 (Filter)
-    const candidates = ACTIVITIES.filter(act => {
+    const candidates = activities.filter(act => {
       // 必须匹配方向
       if (act.direction !== direction) return false;
       // 必须匹配场景

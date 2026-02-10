@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { EMOTIONS } from "@/lib/constants";
 import { RecommendationEngine, RecommendationResult } from "@/lib/recommendation-engine/core";
 import { CheckInService } from "@/lib/services/checkIn";
+import { ActivityService } from "@/lib/services/activity";
+import { ACTIVITIES as FALLBACK_ACTIVITIES } from "@/lib/data/activities";
 import type { EmotionNameEn } from "@/types/emotion";
 import type { Scene } from "@/types/report";
 import type { Activity } from "@/types/activity";
@@ -105,6 +107,18 @@ export default function CheckInPage() {
   const [selectedScene, setSelectedScene] = useState<Scene | null>(null);
   const [step, setStep] = useState<"input" | "loading" | "result">("input");
   const [result, setResult] = useState<RecommendationResult | null>(null);
+  const [allActivities, setAllActivities] = useState<Activity[]>(FALLBACK_ACTIVITIES);
+
+  // 加载活动库
+  useEffect(() => {
+    const loadActivities = async () => {
+      const data = await ActivityService.getAll();
+      if (data && data.length > 0) {
+        setAllActivities(data);
+      }
+    };
+    loadActivities();
+  }, []);
 
   // 处理情绪选择（最多2个）
   const toggleEmotion = (emotion: EmotionNameEn) => {
@@ -131,7 +145,8 @@ export default function CheckInPage() {
     try {
       const recResult = RecommendationEngine.recommend({
         emotions: selectedEmotions,
-        scene: selectedScene
+        scene: selectedScene,
+        availableActivities: allActivities
       });
       setResult(recResult);
 
