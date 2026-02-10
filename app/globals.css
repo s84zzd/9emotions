@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand Colors */
+  --primary: #7C6FF6; /* 柔紫 */
+  --secondary: #AFA7FF; /* 雾紫 */
+  --background: #F8F7FC; /* 奶白紫 */
+  --text-main: #3A3550; /* 深紫灰 */
+  
+  /* Component Colors */
+  --tag-bg: #EFEAFF;
+  --chart-line-main: #7C6FF6;
+  --chart-line-aux: #C7C2FF;
+  
+  /* Shadows */
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-main);
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-[16px] shadow-[0_4px_12px_rgba(0,0,0,0.04)];
+  }
+  
+  .tag {
+    @apply bg-[var(--tag-bg)] text-[var(--primary)] rounded-[12px] px-3 py-1 text-sm font-medium;
+  }
+  
+  .chart-container {
+    @apply bg-white rounded-[20px] p-4 shadow-[0_4px_12px_rgba(0,0,0,0.04)];
+  }
+}
