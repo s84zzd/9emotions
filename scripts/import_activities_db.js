@@ -1,3 +1,13 @@
+// ⚠️ SECURITY WARNING:
+// This script uses the 'xlsx' package which has known security vulnerabilities.
+// It is only used for one-time data import during development and is NOT part of
+// the production application. If you need to import data, consider:
+// 1. Converting Excel files to CSV format first
+// 2. Using a safer library like 'exceljs'
+// 3. Running this script in an isolated environment
+//
+// The xlsx package is kept in devDependencies and will not be included in production builds.
+
 const { createClient } = require('@supabase/supabase-js');
 const XLSX = require('xlsx');
 const fs = require('fs');
